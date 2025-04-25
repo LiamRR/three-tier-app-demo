@@ -4,6 +4,7 @@ import axios from "axios";
 function App() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  const [message, setMessage] = useState("");
 
   const handleSubmit = async () => {
     try {
@@ -13,9 +14,11 @@ function App() {
       );
       setName("");
       setDescription("");
+      setMessage("Item added successfully!");
       console.log("Submit successful");
     } catch (error) {
       console.error("Submit error:", error);
+      setMessage("Something went wrong.");
     }
   };
 
@@ -33,6 +36,8 @@ function App() {
         placeholder="Description"
       /><br/><br/>
       <button onClick={handleSubmit}>Submit</button>
+      <br/><br/>
+      {message && <div>{message}</div>}
     </div>
   );
 }
