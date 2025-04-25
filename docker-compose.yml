@@ -34,13 +34,13 @@ services:
   # Postgres build
   # --------------
   postgres:
-    image: postgres:15
+    image: postgres:15-alpine
     volumes:
       - postgres_data:/var/lib/postgresql/data
     environment:
-      - POSTGRES_USER=${USER}
-      - POSTGRES_PASSWORD=${PASSWORD}
-      - POSTGRES_DB=${DB}
+      - POSTGRES_USER=${USER:-postgres}
+      - POSTGRES_PASSWORD=${PASSWORD:-postgres}
+      - POSTGRES_DB=${DB:-appdb}
     ports:
       - "5432:5432"
     restart: unless-stopped
