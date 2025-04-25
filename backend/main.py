@@ -1,7 +1,7 @@
 import os
 from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from pydantic import BaseModel, constr
 from sqlalchemy import create_engine, Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, Session
@@ -48,7 +48,7 @@ app.add_middleware(
 
 class ItemCreate(BaseModel):
     name: str
-    description: str = ""
+    description: constr(max_length=10)
 
 @app.post("/submit")
 def create_item(item: ItemCreate, db: Session = Depends(get_db)):
