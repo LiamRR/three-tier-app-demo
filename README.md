@@ -1,10 +1,4 @@
-# Hedgehog Lab Docker Compose Demo
-
-### Candidate
-- Name: Liam Robson
-- Email: 90liam@gmail.com
-- Phone: +44 7588 522277
-- LinkedIn: [Liam Robson](https://www.linkedin.com/in/liam-robson-a1990/)
+# A Simple Three Tier Docker Compose Demo
 
 ### Project Objectives
 
@@ -37,11 +31,7 @@ _Note: Data to be persistent in volumes in case of container crashes_
 
 ### Frontend Setup
 
-The requirement for the frontend was to use React so I started by creating the react-app.  This gives us the basic structure we need to start building the frontend: -
-
-```bash
-npx create-react-app hedgehoglab-demo
-```
+The requirement for the frontend was to use React so I started by creating the react-app.
 
 I decided to use `App.js` for the code I used, not best practice by all means but for a PoC, it's just fine.  Typically, you'd want a dedicate file for the element and then consume it within `index.js`.
 
@@ -67,7 +57,7 @@ curl -X 'POST' \
 - Verify that our post was successful: -
 
 ```bash
-docker exec -it hedgehoglab-demo-postgres-1 psql -U postgres -d appdb \
+docker exec -it lumon-demo-postgres-1 psql -U postgres -d appdb \
 --pset expanded=auto -c "SELECT * FROM items;"
  id |  name  | description 
 ----+--------+-------------
@@ -85,16 +75,16 @@ docker exec -it hedgehoglab-demo-postgres-1 psql -U postgres -d appdb \
  docker-compose build && docker-compose up -d
 ...
 [+] Running 4/4
- ✔ Network hedgehoglab-demo_default       Created  0.1s
- ✔ Container hedgehoglab-demo-frontend-1  Started  2.3s
- ✔ Container hedgehoglab-demo-postgres-1  Started  2.3s
- ✔ Container hedgehoglab-demo-backend-1   Started  2.4s
+ ✔ Network lumon-demo_default       Created  0.1s
+ ✔ Container lumon-demo-frontend-1  Started  2.3s
+ ✔ Container lumon-demo-postgres-1  Started  2.3s
+ ✔ Container lumon-demo-backend-1   Started  2.4s
 ```
 
 - I've added labels to each service so that in future iterations, we could handle the build process with bash scripts and we can target resources, like volumes based off labels, like: -
 
 ```bash
-docker image prune --filter "label=project=hedgehoglabs-demo" -f
+docker image prune --filter "label=project=lumon-demo" -f
 ```
 
 - Using this approach adds an extra layer of protection when it comes to both dev and production envs.
@@ -108,7 +98,7 @@ docker image prune --filter "label=project=hedgehoglabs-demo" -f
 
 
 ```bash
-docker exec -it hedgehoglab-demo-postgres-1 psql -U postgres -d \
+docker exec -it lumon-demo-postgres-1 psql -U postgres -d \
 appdb --pset expanded=auto -c "SELECT * FROM items;"
 ```
 
@@ -117,7 +107,7 @@ appdb --pset expanded=auto -c "SELECT * FROM items;"
 ```bash
 docker ps
 CONTAINER ID   IMAGE                       COMMAND                  CREATED          STATUS          PORTS                    NAMES
-6fe11cf7d2a6   hedgehoglab-demo-backend    "uvicorn main:app --…"   43 minutes ago   Up 43 minutes   0.0.0.0:8000->8000/tcp   hedgehoglab-demo-backend-1
+6fe11cf7d2a6   lumon-demo-backend    "uvicorn main:app --…"   43 minutes ago   Up 43 minutes   0.0.0.0:8000->8000/tcp   lumon-demo-backend-1
 ...
 ```
 
@@ -126,15 +116,15 @@ CONTAINER ID   IMAGE                       COMMAND                  CREATED     
 ```bash
 docker ps
 CONTAINER ID   IMAGE                       COMMAND                  CREATED          STATUS          PORTS                    NAMES
-f7f7be533b8f   hedgehoglab-demo-backend    "uvicorn main:app --…"   5 seconds ago    Up 4 seconds    0.0.0.0:8000->8000/tcp   hedgehoglab-demo-backend-1
-38f0af27634c   postgres:15                 "docker-entrypoint.s…"   6 seconds ago    Up 5 seconds    0.0.0.0:5432->5432/tcp   hedgehoglab-demo-postgres-1
+f7f7be533b8f   lumon-demo-backend    "uvicorn main:app --…"   5 seconds ago    Up 4 seconds    0.0.0.0:8000->8000/tcp   lumon-demo-backend-1
+38f0af27634c   postgres:15                 "docker-entrypoint.s…"   6 seconds ago    Up 5 seconds    0.0.0.0:5432->5432/tcp   lumon-demo-postgres-1
 ...
 ```
 
 - Verify that we can see our data: -
 
 ```bash
-docker exec -it hedgehoglab-demo-postgres-1 psql -U postgres -d appdb \
+docker exec -it lumon-demo-postgres-1 psql -U postgres -d appdb \
 set expa∙ --pset expanded=auto -c "SELECT * FROM items;"
  id |  name  | description 
 ----+--------+-------------

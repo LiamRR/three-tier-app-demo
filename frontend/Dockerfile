@@ -1,7 +1,7 @@
 # Use the latest LTS version of Node.js
 FROM node:23-alpine
 
-LABEL project="hedgehoglabs-demo"
+LABEL project="lumon-demo"
 
 # Set the working directory inside the container
 WORKDIR /app
