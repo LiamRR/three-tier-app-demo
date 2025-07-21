@@ -29,8 +29,8 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           IMAGE_TAG: latest
         run: |
-          docker build -t $ECR_REGISTRY/${{ secrets.AWS_ECR_REPOSITORY }}:$IMAGE_TAG ./backend
-          docker push $ECR_REGISTRY/${{ secrets.AWS_ECR_REPOSITORY }}:$IMAGE_TAG
+          docker build -t $ECR_REGISTRY/${{ secrets.AWS_ECR_REPOSITORY }}:backend-$IMAGE_TAG ./backend
+          docker push $ECR_REGISTRY/${{ secrets.AWS_ECR_REPOSITORY }}:backend-$IMAGE_TAG
 
       - name: Build frontend, tag, and push image to Amazon ECR
         id: build-frontend
@@ -38,5 +38,5 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           IMAGE_TAG: latest
         run: |
-          docker build -t $ECR_REGISTRY/${{ secrets.AWS_ECR_REPOSITORY }}:$IMAGE_TAG ./frontend
-          docker push $ECR_REGISTRY/${{ secrets.AWS_ECR_REPOSITORY }}:$IMAGE_TAG
+          docker build -t $ECR_REGISTRY/${{ secrets.AWS_ECR_REPOSITORY }}:frontend-$IMAGE_TAG ./frontend
+          docker push $ECR_REGISTRY/${{ secrets.AWS_ECR_REPOSITORY }}:frontend-$IMAGE_TAG
