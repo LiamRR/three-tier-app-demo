@@ -4,7 +4,7 @@ services:
   # Frontend build
   # --------------
   frontend: 
-    build: ./frontend
+    build: ./frontend # Replace with ECR image in prod
     ports:
       - "3000:3000"
     environment:
@@ -17,7 +17,7 @@ services:
   # Backend build
   # -------------
   backend:
-    build: ./backend
+    build: ./backend # Replace with ECR image in prod
     ports:
       - "8000:8000"
     volumes:
